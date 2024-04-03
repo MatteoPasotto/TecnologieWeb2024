@@ -371,11 +371,11 @@ setInterval(function () {
                     endTime = Date.now() + coffee * 60000; 
                     start= 2;
                     nBombs--;
-                }
-                document.getElementById('bombText').textContent = "Bombe Finite"; 
+                }else{
+                    document.getElementById('bombText').textContent = "Bombe Finite"; 
                 document.getElementById('bombTextBis').textContent = "Bombe Finite";
                 document.getElementById('buttonX').setAttribute('onclick', 'restart()');
-                return;
+                }
             }
             timerText(difference);
             break;
