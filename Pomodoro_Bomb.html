@@ -1,0 +1,404 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Bomb</title>
+    <style>
+        :root {
+	--fire-width: 50px;
+	--fire-blur: 0;
+	--fire-blur: calc(var(--fire-width) * 0.03);
+	--color-start: orangered;
+	--color-end: yellow;
+}
+
+html {
+	min-height: 100vh;
+	display: grid;
+	place-items: center;
+	background: linear-gradient(to top, #333 40%, #555 40%);
+}
+
+body {
+	position: relative;
+}
+
+#parent-container:after {
+	content: "";
+	width: 300px;
+	height: 50px;
+	background: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	border-radius: 50%;
+	transform: translate(-25%, 25%);
+	filter: blur(7px);
+	z-index: -1;
+}
+#parent-container {
+    margin: 10px;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    position: absolute; 
+}
+
+#bomb {
+	width: 300px;
+	height: 300px;
+    
+	border-radius: 50%;
+	background: radial-gradient(circle at 66% 33%, #555, black 50%);
+	position: relative;
+	display: grid;
+	place-items: center;
+	box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.5);
+    aspect-ratio: 4 / 4;
+}
+#bomb:before {
+	content: "";
+	width: 10px;
+	height: 100px;
+	background: linear-gradient(
+		to bottom right,
+		#630 40%,
+		peru 48%,
+		peru 52%,
+		#630 60%
+	);
+	background-size: 10px 10px;
+	border-radius: 15px 15px 15px 15px ;
+	position: absolute;
+	left: 100%;
+	top: -8.5%;
+	transform: rotate(50deg);
+	z-index: -1;
+}
+#bomb:after {
+	content: "";
+	width: 100px;
+	height: 100px;
+	background: linear-gradient(to top, black, #222);
+	border-radius: 15px 15px 0 0;
+	position: absolute;
+	left: 75%;
+	top: 0;
+	transform: rotate(50deg);
+	z-index: -1;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+#setup{
+    font-family: system-ui, sans-serif;
+	color: white;
+	text-align: center;
+	font-size: 18px;
+	letter-spacing: 3px;
+	line-height: 100%;
+}
+
+#time{
+    display: none;
+	font-family: system-ui, sans-serif;
+	color: white;
+	text-align: center;
+	font-size: 36px;
+	letter-spacing: 3px;
+	line-height: 100%;
+}
+
+#time span {
+	font-size: 20px !important;
+	display: block;
+	margin: 1.25rem 0;
+	font-weight: 100;
+	padding: 1.25rem 0;
+	letter-spacing: 1px;
+}
+#time span:nth-child(1) {
+	border-bottom: 1px solid gray;
+}
+#time span:nth-child(2) {
+	border-top: 1px solid gray;
+}
+
+#flame_box {
+	width: 40px;
+	height: 50px;
+	position: absolute;
+	left: 107%;
+	top: -16.5%;
+	border-radius: 0 0 100% 100%;
+	overflow: hidden;
+	border-radius: 50% / 40% 40% 60% 60%;
+    
+}
+.flame {
+	width: calc(var(--fire-width) * 0.2);
+	height: calc(var(--fire-width) * 0.2);
+	border-radius: 50%;
+	background: var(--color-start);
+	position: absolute;
+	bottom: 0;
+	transform: translateX(-50%);
+	filter: blur(var(--fire-blur));
+	animation: burn 1.5s ease-in forwards;
+}
+@keyframes burn {
+	0% {
+		opacity: 0;
+	}
+	10% {
+		opacity: 1;
+	}
+	100% {
+		background: var(--color-end);
+		bottom: calc(var(--fire-width) * 0.75);
+		opacity: 0;
+		transform: translateX(-50%) scale(0.2);
+	}
+}
+  
+      @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,700,900');
+
+.button {
+    font-size: small;
+  user-select: none;
+  display: inline-block;
+  border: .1em solid;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  opacity: 0.6;
+  color: #FFF;
+}
+
+.button__text {
+  display: block;
+  padding: 1em 1em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.button__text:before {
+  content: attr(title);
+}
+
+.button__text--bis {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateX(-1 * 1em);
+  opacity: 0;
+}
+
+.button__mask {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  transform: translateX(-100%) rotate(45deg);
+  transition: all 0.3s;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+.button:hover .button__text {
+  animation: fx-text 0.3s ease-out;
+}
+
+.button:hover .button__text--bis {
+  animation: fx-text-bis 0.3s ease-out;
+}
+
+.button:hover .button__mask {
+  animation: fx-mask 0.3s ease-out;
+}
+
+.button:active {
+  opacity: 1;
+  background: white;
+  color: inherit;
+}
+
+@keyframes fx-mask {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+@keyframes fx-text {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(1em);
+    opacity: 0;
+  }
+}
+
+@keyframes fx-text-bis {
+  0% {
+    transform: translateX(-1em);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <div id="parent-container">
+        <div id="setup">
+            <form id="setupForm">
+                <label for="timer">Minuti all'esplosione:</label>
+                <p></p>
+                <input type="number" id="timer"  min="1" required>
+                <p></p>
+                <label for="timer">Tempo pausa caffe:</label>
+                <p></p>
+                <input type="number" id="coffee"  min="0" required>
+                <p></p>
+                <label for="timer">Numero Bombe:</label>
+                <p></p>
+                <input type="number" id="nBombs"  min="1" required>
+                <p></p>
+            </form>
+        </div>
+        <div id='bomb'>
+            <div id='flame_box'></div>
+            <div class="button" id="buttonX" onclick="setUp()">
+                <span class="button__mask"></span>
+                <span class="button__text"><p id="bombText">innesca la Bomba</p></span>
+                <span class="button__text button__text--bis"><p id="bombTextBis">innesca la Bomba</p></span>
+            </div>  
+            <div id='time'></div>
+        </div>
+    </div>
+    
+    <script>
+        const box = document.querySelector("#flame_box");
+        let start=0;
+        let timer;
+        let animationDuration;
+        let endTime;
+        let coffee;
+        let nBombs;
+        let now;
+        let difference;
+function addFlame() {
+	var f = document.createElement("div");
+	f.className = "flame";
+	f.style.left = Math.random() * 100 + "%";
+	f.style.animationDuration = Math.random() < 0.5 ? "3s" : "1.5s";
+	f.onanimationend = function () {
+		this.remove();
+	};
+	box.appendChild(f);
+}
+
+function setUp(){
+    if(parseInt(document.getElementById('timer').value, 10)>0){
+    start=1;
+    document.getElementById('setup').style.display = "none";
+    // Ottiene il tempo di studio inserito dall'utente e lo converte in un numero intero
+    timer = parseInt(document.getElementById('timer').value, 10);
+    // Converte i minuti in secondi per l'animazione
+    animationDuration = timer * 60;
+    // Calcola il tempo di fine aggiungendo la durata del timer al tempo corrente
+    endTime = Date.now() + timer * 60000; 
+    // Ottiene il tempo di studio inserito dall'utente e lo converte in un numero intero
+    coffee = parseInt(document.getElementById('coffee').value, 10);
+    // Converte i minuti in secondi per l'animazione
+    // Ottiene il tempo di studio inserito dall'utente e lo converte in un numero intero
+    nBombs = parseInt(document.getElementById('nBombs').value, 10);
+    var flame = document.querySelector("#flame_box");
+    flame.style.transition = 'transform '+animationDuration+'s ease';
+    flame.style.transform = 'translateX(-24px) translatey(26px)';
+    document.getElementById('buttonX').removeAttribute('onclick');
+    }
+}
+function pausaCaffe(){
+    
+
+}
+function timerText(difference){
+    if(start == 1){
+    let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    document.getElementById('bombText').textContent = 'Timer:'+`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    document.getElementById('bombTextBis').textContent = 'Timer:'+`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+    if(start == 2){
+    let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    document.getElementById('bombText').textContent = 'Pausa caffè:'+`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    document.getElementById('bombTextBis').textContent = 'Pausa caffè:'+`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+   
+}
+setInterval(function () {
+    switch(start){
+        case 0:
+            break;
+        case 1:
+            addFlame();
+            now = Date.now();
+            // Calcola la differenza tra il tempo di fine e il tempo corrente
+            difference = endTime - now;
+            // Se la differenza è minore o uguale a 0, ferma l'intervallo
+            if (difference <= 0) {
+                clearInterval(setInterval);
+                start=0;
+                // Pulisce il testo dell'elemento con id 'timerDisplay'
+                if(nBombs>1){
+                    endTime = Date.now() + coffee * 60000; 
+                    start= 2;
+                    nBombs--;
+                }
+                document.getElementById('bombText').textContent = "Bombe Finite"; 
+                document.getElementById('bombTextBis').textContent = "Bombe Finite";
+                document.getElementById('buttonX').setAttribute('onclick', 'restart()');
+                return;
+            }
+            timerText(difference);
+            break;
+        case 2:
+            now = Date.now();
+            difference = endTime - now;
+            if (difference <= 0) {
+                clearInterval(setInterval);
+                endTime = Date.now() + timer * 60000; 
+                start= 1;
+            }
+            timerText(difference);
+            break;
+        default:
+            console.log("unknown case");
+            break;
+       }
+   
+
+}, 1000/30);
+function restart(){
+    location.reload();
+}
+    </script>
+</body>
+</html>
