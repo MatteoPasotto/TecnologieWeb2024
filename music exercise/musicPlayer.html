@@ -1,0 +1,332 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bootstrap 5 responsive card slider</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/css/splide.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        <style>
+            body {
+                background: #dfe7ef;
+                font-family: "Open Sans", sans-serif;
+            }
+            .myStyleCard{
+                height: 18rem !important;
+               
+            }
+            .wrapper {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                background-size: cover;
+                @media screen and (max-width: 700px), (max-height: 500px) {
+                    flex-wrap: wrap;
+                    flex-direction: column;
+                }
+            }
+                        
+            #player {
+                background: #eef3f7;
+                width: 410px;
+                min-height: 480px;
+                box-shadow: 0px 15px 35px -5px rgba(50, 88, 130, 0.32);
+                border-radius: 15px;
+                padding: 30px;
+                background: linear-gradient(rgb(141, 21, 11), white);
+                @media screen and (max-width: 576px), (max-height: 500px) {
+                    width: 95%;
+                    padding: 20px;
+                    margin-top: 75px;
+                    min-height: initial;
+                    padding-bottom: 30px;
+                    max-width: 400px;
+            }
+            }
+            .imgContainer{
+                background-color: aquamarine;
+                width: 290px;
+                height: 230px;
+                border-radius: 15px;
+                margin-top: -70px;
+                display: block;
+                margin-bottom: auto;
+                margin-left: auto;
+                margin-right: auto;
+                flex-shrink: 0;
+                position: relative;
+                overflow: hidden;
+                background: -gradient(to bottom, #8D150B, white); /* Radial Gradient from red to white */
+            }
+
+            #middlecard{
+                width: 100%;
+                height: 85px;
+                top: 20px;
+                position: relative;
+            }
+            #next-icon{
+                width: 50px;
+                height: 50px;
+                fill: white;
+            }
+            #prev-icon{
+                width: 50px;
+                height: 50px;
+                fill: white;
+            }
+            #bottomCard{
+                top: 50px;
+                position: relative;
+
+            }
+            #songTitle{
+                font-style: italic;
+                font-weight: bold;
+                font-size: large;
+                color: black;
+            }
+            #Artist{
+                font-size: medium;
+                color: black;
+                opacity: 0.7;
+            }
+            .volume-slider {
+            width: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease, width 0.5s ease;
+            }
+
+            .volume-control-container:hover .volume-slider {
+                width: 100%;
+                /* Adjust based on the desired width when visible */
+                opacity: 1;
+            }
+
+        </style>
+    </head>
+
+    <body>
+    <div class="wrapper">
+        <div id="player" class="container" >
+            <div class="imgContainer">
+                <div id="carouselExampleControls" class="carousel slide" data-bs-interval="false">
+                    <div class="carousel-inner">
+                    <div id="1" class="carousel-item active">
+                        <img src="./doom.jpg" class="d-block w-100" alt="..." style='height: 100%; width: 100%;'>
+                    </div>
+                    <div id="2" class="carousel-item">
+                        <img src="./grim_fandango.jpg" class="d-block w-100" alt="..." style='height: 100%; width: 100%; '>
+                    </div>
+                    <div id="3" class="carousel-item">
+                        <img src="./selenium_forest.jpg" class="d-block w-100" alt="..." style='height: 100%; width: 100%; '>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="middleCard">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <svg id="prev-icon" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                    </svg>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <svg id="playbutton" width="75" height="75" style="margin-left: 140px;" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814z"/>
+                    <circle id="playCircle" cx="8" cy="8" r="8" fill="black" fill-opacity="0"/>
+                </svg>
+                <svg id="pausebutton" width="75" height="75" style="margin-left: 140px; display: none"  class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5m3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5"/>
+                    <circle id="pauseCircle" cx="8" cy="8" r="8" fill="black" fill-opacity="0"/>
+                </svg>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                  <svg id="next-icon"  class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+                  </svg>
+                  <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div id="bottomCard">
+                <div id="songTitle">The Only Thing They Fear Is You</div>
+                <div id="Artist">Mick Gordon</div>
+                <audio id="musicPlayer" src="music_Doom_Eternal.mp3" hidden></audio>
+
+                <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <input class="progress-bar" type="range" id="progressSlider" class="form-range" min="0"
+                        max="100" value="0" step="1" style="width: 100%;">
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span id="currentTime">0:00</span>
+                    <span id="totalDuration">0:00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script>
+            const audio = document.getElementById('musicPlayer');
+            const progressSlider = document.getElementById('progressSlider');
+            const currentTimeDisplay = document.getElementById('currentTime');
+            const totalDurationDisplay = document.getElementById('totalDuration');
+            let musicPlay = false; // Initial state
+            let playCircle = document.getElementById('playCircle');
+            let pauseCircle = document.getElementById('pauseCircle');
+
+            function loadSong1(){
+                document.getElementById('player').style.background = 'linear-gradient(to bottom, #8D150B, white)';
+                document.getElementById('songTitle').innerHTML = 'The Only Thing They Fear Is You';
+                document.getElementById('Artist').innerHTML = 'Mick Gordon';
+                audio.src = 'music_Doom_Eternal.mp3';
+            }
+            function loadSong2(){
+                document.getElementById('player').style.background = 'linear-gradient(to bottom, #95723A, white)';
+                document.getElementById('songTitle').innerHTML = 'Companeros';
+                document.getElementById('Artist').innerHTML = 'Peter McConnell';
+                audio.src = 'music_grim_fandango.mp3';
+            }
+            function loadSong3(){
+                document.getElementById('player').style.background = 'linear-gradient(to bottom, #9F97B9, white)';
+                document.getElementById('songTitle').innerHTML = 'Selenium Forest';
+                document.getElementById('Artist').innerHTML = 'Plini';
+                audio.src = 'music_Selenium_Forest.mp3';
+            }
+
+            function nextSong() {
+                if(musicPlay){
+                    stopMusic();
+                    musicPlay = false;
+                }
+                   
+                const activeSong = document.getElementsByClassName("active")[0];
+                id = activeSong.id;
+                console.log(activeSong.id);
+                switch(id){
+                    case '1':
+                        loadSong2();
+                        break;
+                    case '2':
+                        loadSong3();
+                        break;
+                    case '3':
+                        loadSong1();
+                        break; 
+                    default:
+                        console.log("error undefined id");
+                        break;
+                }
+            }
+            function prevSong() {
+                const activeSong = document.getElementsByClassName("active")[0];
+                id = activeSong.id;
+                console.log(activeSong.id);
+                switch(id){
+                    case '1':
+                        loadSong3();
+                        break;
+                    case '2':
+                        loadSong1();
+                        break;
+                    case '3':
+                        loadSong2();
+                        break; 
+                    default:
+                        console.log("error undefined id");
+                        break;
+                }
+            }
+            function playMusic(){
+                audio.play();
+                document.getElementById('playbutton').style.display = 'none';
+                document.getElementById('pausebutton').style.display = 'block';
+                
+            }
+            function stopMusic(){
+                audio.pause();
+                document.getElementById('playbutton').style.display = 'block';
+                document.getElementById('pausebutton').style.display = 'none';
+                
+            }
+
+            // Format time to display as minutes:seconds
+        function formatTime(seconds) {
+            let minutes = Math.floor(seconds / 60);
+            seconds = Math.floor(seconds % 60);
+            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        // Display total duration once the audio metadata is loaded
+        audio.addEventListener('loadedmetadata', () => {
+            totalDurationDisplay.textContent = formatTime(audio.duration);
+        });
+
+        // Update current time and progress bar as the audio plays
+        audio.addEventListener('timeupdate', function () {
+            const percentage = (this.currentTime / this.duration) * 100;
+            progressSlider.value = percentage;
+            currentTimeDisplay.textContent = formatTime(this.currentTime);
+        });
+
+        // Update the current time when the user seeks
+        progressSlider.addEventListener('input', function () {
+            const seekTime = (audio.duration / 100) * progressSlider.value;
+            audio.currentTime = seekTime;
+        });
+
+        // Handle audio ending
+        audio.onended = function () {
+            const playPauseIcon = document.getElementById('playPauseIcon');
+            playPauseIcon.classList.remove('bi-pause-circle-fill');
+            playPauseIcon.classList.add('bi-play-circle-fill');
+            progressSlider.value = 0;
+            currentTimeDisplay.textContent = formatTime(0);
+            musicPlay = false;
+        };
+
+            //add listener to next-icon 
+            if (document.getElementsByClassName('carousel-control-next')[0]){
+                const listenerNextSong = document.getElementsByClassName("carousel-control-next")[0];
+                listenerNextSong.addEventListener("click", nextSong);
+            }else{
+                console.log("error: next-song icon missing");
+            }
+                
+            //add listener to prev-icon 
+            if (document.getElementsByClassName('carousel-control-prev')[0]){
+                const listenerPrevSong = document.getElementsByClassName("carousel-control-prev")[0];
+                listenerPrevSong.addEventListener("click", prevSong);
+            }else{
+                console.log("error: prev-song icon missing");
+            }
+
+            //add listener to play/pause music
+           
+            playCircle.addEventListener('click', function(event) {
+                musicPlay = !musicPlay;
+                if (musicPlay) {
+                    playMusic();
+                } else {
+                    stopMusic()
+                }
+            });
+
+            pauseCircle.addEventListener('click', function(event) {
+                musicPlay = !musicPlay;
+                if (musicPlay) {
+                    playMusic();
+                } else {
+                    stopMusic()
+                }
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    </body>
+
+</html>
+
+
